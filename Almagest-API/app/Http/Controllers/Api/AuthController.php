@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Notifications\WelcomeEmail;
 use Auth;
+use Carbon\Carbon;
 use Hash;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -48,6 +50,7 @@ class AuthController extends Controller
     }
     public function register(Request $request)
     {
+        $request->headers->set('Accept', 'application/json');
         $request->validate([
             'firstname' => 'required|string|max:255',
             'secondname' => 'nullable|string|max:255',
@@ -63,11 +66,15 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
             'company_id' => $request->company_id,
             'type' => "u",
-            'activated' => 0
+            'activated' => 0,
         ]);
 
         // Envía email de verificación
-        event(new Registered($user));
+        $user->notify(new WelcomeEmail());
+
+        // Marca la fecha en que se envió el email
+        $user->email_verified_at = Carbon::now();
+        $user->save();
 
         return response()->json([
             'message' => 'Usuario registrado. Revisa tu email para verificar la cuenta.'
