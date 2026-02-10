@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use App\Models\User;
 
 class LoginController extends Controller
 {
@@ -19,6 +22,56 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
+
+    protected function login(Request $request)
+    {
+
+        $credentials = $request->only('email', 'password');
+
+        $user = User::where('email', $credentials['email'])->first();
+
+        if (!$user) {
+            return redirect()->route('login')->withErrors([
+                'email' => 'El usuario no existe en nuestra base de datos.'
+            ]);
+        }
+
+
+        if ($user->email_confirmed == 0) {
+            Auth::logout();
+            return redirect()->route('login')->withErrors([
+                'email' => 'No puedes iniciar sesión porque tu email no está verificado.'
+            ]);
+        }
+
+        if ($user->activated == 0) {
+            Auth::logout();
+            return redirect()->route('login')->withErrors([
+                'email' => 'No puedes iniciar sesión porque la cuenta no está activada.'
+            ]);
+        }
+
+
+        if ($user->deleted == 1) {
+            Auth::logout();
+            return redirect()->route('login')->withErrors([
+                'email' => 'La cuenta está eliminada'
+            ]);
+        }
+
+        if (!Auth::attempt($credentials)) {
+            return redirect()->route('login')->withErrors([
+                'password' => 'La contraseña es incorrecta'
+            ]);
+        }
+
+        if ($user->type === 'A') {
+            return redirect('/admin');
+        }
+
+        return redirect('/home');
+
+    }
 
     /**
      * Where to redirect users after login.
