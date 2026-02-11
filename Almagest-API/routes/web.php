@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DeliveryNoteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+    //ADMIN (Antiguo)
     Route::get('/home', function () {
         if (Auth::check() && Auth::user()->type === 'A') {
             return app(AdminController::class)->index();
@@ -58,10 +60,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('admin.user.update');
 
 
+    //Delivery Note
+    Route::resource('deliverynotes', DeliveryNoteController::class)->only(['index']);
 
-    // VISTAS (tablas)
-    // Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
-    // Route::get('/deliverynotes', [DeliveryNoteController::class, 'index'])->name('deliverynotes.index');
-    // Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoices.index');
 
 });
