@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\OrdersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\DeliveryNoteController;
@@ -32,10 +33,12 @@ Route::middleware('auth:sanctum')->group(function () {
     //Delivery Notes API
     Route::apiResource('deliverynotes', DeliveryNoteController::class);
     //Ruta personalizada de sign
-    Route::post('deliverynotes/sign/{deliverynote}', [DeliveryNoteController::class, 'sign']);
+    //Route::post('deliverynotes/sign/{deliverynote}', [DeliveryNoteController::class, 'sign']);
 
     //Invoices API
     Route::apiResource('invoices', InvoiceController::class);
 
+    //Orders API
+    Route::apiResource('orders', OrdersController::class);
 
 });
