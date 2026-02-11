@@ -8,7 +8,6 @@ use App\Notifications\WelcomeEmail;
 use Auth;
 use Carbon\Carbon;
 use Hash;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
