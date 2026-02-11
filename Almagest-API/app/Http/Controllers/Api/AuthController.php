@@ -44,7 +44,7 @@ class AuthController extends Controller
 
         return response()->json([
             'token' => $token,
-            'user' => $user
+            'user' => $user->firstname
         ]);
     }
     public function register(Request $request)
@@ -73,6 +73,7 @@ class AuthController extends Controller
 
         // Marca la fecha en que se envió el email
         $user->email_verified_at = Carbon::now();
+        $user->email_confirmed = 1;
         $user->save();
 
         return response()->json([
