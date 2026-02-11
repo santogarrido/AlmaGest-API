@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
 
@@ -13,7 +12,8 @@ class OrdersController extends Controller
      */
     public function index()
     {
-        //
+        $orders = Order::get();
+        return view('orders.index', compact('orders'));
     }
 
     /**
@@ -29,23 +29,7 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'num' => 'required|string|max:50|unique:orders,num',
-            'issuedate' => 'required|date',
-            'company_id' => 'required|exists:companies,id',
-        ]);
-
-        $order = Order::create([
-            'num' => $request->num,
-            'issuedate' => $request->issuedate,
-            'company_id' => $request->company_id,
-            'deleted' => 0,
-        ]);
-
-        return response()->json([
-            'message' => 'Pedido creado correctamente',
-            'order' => $order,
-        ], 201);
+        //
     }
 
     /**
@@ -53,15 +37,7 @@ class OrdersController extends Controller
      */
     public function show(string $id)
     {
-        $order = Order::find($id);
-
-        if (!$order) {
-            return response()->json([
-                'message' => 'Pedido no encontrado.'
-            ], 404);
-        }
-
-        return response()->json($order, 200);
+        //
     }
 
     /**

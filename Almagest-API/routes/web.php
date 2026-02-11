@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\OrdersController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
@@ -63,5 +65,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     //Delivery Note
     Route::resource('deliverynotes', DeliveryNoteController::class)->only(['index']);
 
+    //Order
+    Route::resource('orders', OrdersController::class)->only(['index']);
 
+    //Facturas
+    Route::resource('invoices', InvoiceController::class)->only(['index']);
 });

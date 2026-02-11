@@ -56,10 +56,10 @@
                         <a class="nav-link text-white" href="{{ route('deliverynotes.index') }}">Albaranes</a>
                     </li>
                     <li class="nav-item mb-2">
-                        <a class="nav-link text-white" href="#">Pedidos</a> <!-- Ruta de orders -->
+                        <a class="nav-link text-white" href="{{ route('orders.index') }}">Pedidos</a> <!-- Ruta de orders -->
                     </li>
                     <li class="nav-item mb-2">
-                        <a class="nav-link text-white" href="#">Facturas</a> <!-- Ruta de invoices -->
+                        <a class="nav-link text-white" href="{{ route('invoices.index') }}">Facturas</a> <!-- Ruta de invoices -->
                     </li>
                 </ul>
             </nav>
