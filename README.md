@@ -205,3 +205,40 @@ Para poder utilizar los endpoints protegidos es necesario autenticarse mediante 
 ---
 
 
+## 5.4 Endpoints de Pedidos (Orders)
+
+### Recuperar un pedido
+
+- **Endpoint:** `/api/orders/{id}`
+- **Método:** `GET`
+- **Descripción:** Recupera la información de un pedido concreto.
+
+**Parámetros (URL):**
+- `id` → ID del pedido
+
+**Respuesta:**
+- Datos de el pedido en formato JSON
+
+![Get_Orders](Almagest-API/docs/images/OrdersGet.png)
+
+---
+
+### Crear un pedido
+
+- **Endpoint:** `/api/orders`
+- **Método:** `PUT`
+- **Descripción:** Actualiza los datos de una factura existente.
+- **Headers:** Accept: application/json | Content-Type: application/json
+
+**Parámetros (BODY - JSON):**
+- `num` (string)
+- `issuedate` (string) YYYY-mm-dd
+- `company_id` (integer)
+
+**Respuesta:**
+- Pedido creado correctamente
+- Datos del pedido en formato JSON
+
+![create_orders](Almagest-API/docs/images/OrdersPost.png)
+
+---
