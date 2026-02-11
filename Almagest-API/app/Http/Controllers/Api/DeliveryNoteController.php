@@ -53,7 +53,7 @@ class DeliveryNoteController extends Controller
             ], 404);
         }
 
-        // Marcar como eliminado en lugar de borrado físico (según tu tabla)
+        // soft delete
         $deliveryNote->deleted = 1;
         $deliveryNote->save();
 
